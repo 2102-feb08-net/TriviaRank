@@ -7,9 +7,14 @@
 A trivia game using the [Open Trivia Database Api](https://opentdb.com/). Participants will compete by gaining points from answering trivia questions correctly. The participant with the most points at the end of the game will be the winner. Participants will be able to create accounts that store statistics from games played.
 
 ## Technology:
+Angular 
+Typescript
 
 ## Stretch Goals:
+Adding friends
 
 ## Contributing:
-
 For now contributing will only be done with project members, but thank you for your interest
+
+## Project Status 
+Unapproved
