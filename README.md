@@ -11,10 +11,10 @@ Angular
 Typescript
 
 ## Stretch Goals:
-Adding friends
+TBD
 
 ## Contributing:
 For now contributing will only be done with project members, but thank you for your interest
 
 ## Project Status 
-Unapproved
+Approved
