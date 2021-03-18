@@ -29,6 +29,11 @@ export class AccountService {
     this.userSubject.next(user);
   }
 
+  getAllPlayers()
+  {
+    return this.httpClient.get<User[]>(`https://localhost:44329/api/players`);
+  }
+
   getByUsername(username: string)
   {
     return this.httpClient.get<User>(`https://localhost:44329/api/player/username/${username}`);
