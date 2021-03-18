@@ -1,8 +1,9 @@
 export interface User {
-    id: string;
+    id: number;
     username: string;
     password: string;
     firstName: string;
     lastName: string;
-    token: string;
+    points: number;
+    birthday: Date;
 }

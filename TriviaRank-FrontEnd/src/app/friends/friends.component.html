@@ -1,1 +1,12 @@
-<p>friends works!</p>
+<div>
+    <table class="table">
+        <thead>
+            <td>ID</td>
+            <td>Username</td>
+        </thead>
+        <tbody *ngFor="let friend of friends">
+            <td>{{friend.id}}</td>
+            <td>{{friend.username}}</td>
+        </tbody>
+    </table>
+</div>

@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
-import { AppRoutingModule } from './app-routing.module';
 import { GamesComponent } from './games/games.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { FriendsComponent } from './friends/friends.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,11 +19,13 @@ import { FriendsComponent } from './friends/friends.component';
     HomeComponent,
     GamesComponent,
     LeaderboardComponent,
-    FriendsComponent
+    FriendsComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     ReactiveFormsModule,
+    RouterModule,
     AppRoutingModule,
   ],
   providers: [],

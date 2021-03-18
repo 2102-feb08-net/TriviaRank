@@ -10,6 +10,7 @@ import { AccountService } from '../account.service';
 })
 export class LoginFormComponent implements OnInit {
   form: FormGroup
+  submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -17,10 +18,7 @@ export class LoginFormComponent implements OnInit {
     private accountService: AccountService,
     ) { }
 
-  onSubmit(): void {
-    this.router.navigateByUrl('/home');
-    this.accountService.login("place", "holder");
-  }
+  get f() { return this.form.controls; }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -28,5 +26,17 @@ export class LoginFormComponent implements OnInit {
       password: ['', Validators.required]
   });
   }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+        return;
+    }
+
+    this.router.navigateByUrl('/home');
+    this.accountService.login(this.f.username.value, this.f.password.value);
+}
 
 }
