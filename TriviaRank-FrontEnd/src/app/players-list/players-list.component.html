@@ -1,0 +1,14 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <td>ID</td>
+            <td>Username</td>
+            <td>Points</td>
+        </thead>
+        <tbody *ngFor="let player of players">
+            <td>{{player.id}}</td>
+            <td>{{player.username}}</td>
+            <td>{{player.points}}</td>
+        </tbody>
+    </table>
+</div>

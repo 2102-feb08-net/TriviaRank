@@ -1,12 +1,3 @@
 <div>
-    <table class="table">
-        <thead>
-            <td>Username</td>
-            <td>Points</td>
-        </thead>
-        <tbody *ngFor="let player of players">
-            <td>{{player.username}}</td>
-            <td>{{player.points}}</td>
-        </tbody>
-    </table>
+    <app-players-list [players]="players"></app-players-list>
 </div>

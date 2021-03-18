@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  user: User;
+  user?: User;
   title = 'TriviaRank-FrontEnd';
 
   constructor(private accountService: AccountService) {

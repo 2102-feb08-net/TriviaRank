@@ -8,7 +8,7 @@ import { User } from '../models/User';
   styleUrls: ['./leaderboard.component.css']
 })
 export class LeaderboardComponent implements OnInit {
-  public players: User[];
+  public players: User[] = [];
   constructor(private accountService:AccountService) { }
 
   ngOnInit(): void {

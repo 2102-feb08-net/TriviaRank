@@ -9,34 +9,37 @@ import { AccountService } from '../account.service';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-  form: FormGroup
+  form: FormGroup;
   submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private accountService: AccountService,
-    ) { }
+    ) 
+    { 
+      this.form = this.formBuilder.group({
+        username: ['', Validators.required],
+        password: ['', Validators.required]
+    });
+    }
 
-  get f() { return this.form.controls; }
+  get f() { if (this.form) return this.form.controls; }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-  });
   }
 
   onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.form.invalid) {
+    if (this.form && this.form.invalid) {
         return;
     }
 
     this.router.navigateByUrl('/home');
-    this.accountService.login(this.f.username.value, this.f.password.value);
+    if (this.f)
+      this.accountService.login(this.f.username.value, this.f.password.value);
 }
 
 }

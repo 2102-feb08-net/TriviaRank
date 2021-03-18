@@ -11,6 +11,8 @@ import { FriendsComponent } from './friends/friends.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { PlayersListComponent } from './players-list/players-list.component';
+import { FriendinvitesComponent } from './friendinvites/friendinvites.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
     GamesComponent,
     LeaderboardComponent,
     FriendsComponent,
+    PlayersListComponent,
+    FriendinvitesComponent,
   ],
   imports: [
     BrowserModule,

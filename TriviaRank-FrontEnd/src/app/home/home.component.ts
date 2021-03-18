@@ -8,16 +8,17 @@ import { User } from '../models/User';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public user:User;
+  public user?:User;
   constructor(private accountService: AccountService) 
   {
   }
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem("user"));
-    this.accountService.getByUsername(this.user.username)
-      .subscribe(p => {this.user = p; localStorage.setItem("user", JSON.stringify(this.user));});
-    localStorage.setItem("user", JSON.stringify(this.user));
+    this.accountService.user.subscribe(p => this.user = p);
+    if (this.user) {
+      this.accountService.getByUsername(this.user.username)
+        .subscribe(p => {this.user = p; localStorage.setItem("user", JSON.stringify(this.user));});
+    }
   }
 
 }

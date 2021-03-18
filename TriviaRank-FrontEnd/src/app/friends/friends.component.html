@@ -1,12 +1,12 @@
 <div>
-    <table class="table">
-        <thead>
-            <td>ID</td>
-            <td>Username</td>
-        </thead>
-        <tbody *ngFor="let friend of friends">
-            <td>{{friend.id}}</td>
-            <td>{{friend.username}}</td>
-        </tbody>
-    </table>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active">Friends</a>
+        </li>
+        <li class="nav-item" routerLink="/friendinvites">
+          <a class="nav-link" >Invites</a>
+        </li>
+    </ul>
+    
+    <app-players-list [players]="friends"></app-players-list>
 </div>
