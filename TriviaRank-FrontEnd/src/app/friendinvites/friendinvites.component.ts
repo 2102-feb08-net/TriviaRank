@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AccountService } from '../account.service';
+import { AccountService } from '../services/account.service';
 import { User } from '../models/User';
-import { OutboxService } from '../outbox.service';
+import { OutboxService } from '../services/outbox.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class FriendinvitesComponent implements OnInit {
     if (this.player)
     {
       this.outboxService.getPlayerFriendInvites(this.player.id)
-        .subscribe(players => {this.inviters = players; console.log(players)});
+        .subscribe(players => {this.inviters = players});
     }
   }
 

@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { PlayersListComponent } from './players-list/players-list.component';
 import { FriendinvitesComponent } from './friendinvites/friendinvites.component';
+import { GamelistComponent } from './gamelist/gamelist.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FriendinvitesComponent } from './friendinvites/friendinvites.component'
     FriendsComponent,
     PlayersListComponent,
     FriendinvitesComponent,
+    GamelistComponent,
   ],
   imports: [
     BrowserModule,

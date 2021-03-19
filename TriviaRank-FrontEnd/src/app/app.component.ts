@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { of } from 'rxjs';
-import { AccountService } from './account.service';
+import { AccountService } from './services/account.service';
 import { User } from './models/User';
 import { RouterModule } from '@angular/router';
 

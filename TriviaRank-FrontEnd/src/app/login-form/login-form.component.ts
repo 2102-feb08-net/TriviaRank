@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountService } from '../account.service';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-login-form',
@@ -37,9 +37,11 @@ export class LoginFormComponent implements OnInit {
         return;
     }
 
-    this.router.navigateByUrl('/home');
     if (this.f)
-      this.accountService.login(this.f.username.value, this.f.password.value);
+    {
+        this.accountService.login(this.f.username.value, this.f.password.value);
+    }
+    this.router.navigateByUrl('/home');
 }
 
 }

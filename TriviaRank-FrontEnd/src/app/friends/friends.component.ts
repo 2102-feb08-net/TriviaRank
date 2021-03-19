@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../account.service';
+import { AccountService } from '../services/account.service';
 import { User } from '../models/User';
 
 @Component({
@@ -13,7 +13,7 @@ export class FriendsComponent implements OnInit {
   constructor(private userService: AccountService) { }
 
   ngOnInit(): void {
-    this.userService.user.subscribe(p => {this.user = p; console.log(p)});
+    this.userService.user.subscribe(p => this.user = p);
     if (this.user) {
       this.userService.getFriends(this.user.id)
         .subscribe(friendsIds => {this.convertFriendIdsToUser(friendsIds)});
