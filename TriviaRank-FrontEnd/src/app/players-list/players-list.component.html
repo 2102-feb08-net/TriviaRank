@@ -1,14 +1,18 @@
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark">
-            <td>ID</td>
-            <td>Username</td>
-            <td>Points</td>
+            <tr>
+                <td>ID</td>
+                <td>Username</td>
+                <td>Points</td>
+            </tr>
         </thead>
-        <tbody *ngFor="let player of players">
-            <td>{{player.id}}</td>
-            <td>{{player.username}}</td>
-            <td>{{player.points}}</td>
+        <tbody>
+            <tr *ngFor="let player of players">
+                <td>{{player.id}}</td>
+                <td>{{player.username}}</td>
+                <td>{{player.points}}</td>
+            </tr>
         </tbody>
     </table>
 </div>

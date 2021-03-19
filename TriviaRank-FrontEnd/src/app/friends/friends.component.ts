@@ -20,10 +20,7 @@ export class FriendsComponent implements OnInit {
     }
   }
 
-  onTabClick(view:string) {
-    if (view == 'invites') {
-      //this.viewInvites = true;
-    }
+  onNewFriendClick() {
   }
 
   convertFriendIdsToUser(friendIds:number[]): void {

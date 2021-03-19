@@ -1,23 +1,27 @@
 <ul class="nav nav-tabs">
     <li class="nav-item" routerLink="/friends">
-      <a class="nav-link active">Friends</a>
+      <a class="nav-link">Friends</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" >Invites</a>
+      <a class="nav-link active" >Invites</a>
     </li>
 </ul>
 
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark">
-            <td>ID</td>
-            <td>Username</td>
-            <td>Accept</td>
+            <tr>
+                <td>ID</td>
+                <td>Username</td>
+                <td>Accept</td>
+            </tr>
         </thead>
         <tbody *ngFor="let player of inviters">
-            <td>{{player.id}}</td>
-            <td>{{player.username}}</td>
-            <td><button type="button" class="btn btn-success">Accept</button></td>
+            <tr>
+                <td class="align-middle">{{player.id}}</td>
+                <td class="align-middle">{{player.username}}</td>
+                <td><button type="button" class="btn btn-success">Accept</button></td>
+            </tr>
         </tbody>
     </table>
 </div>

@@ -21,4 +21,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  formattedDate(date:Date)
+  {
+    return `${new Date(date).toLocaleString()}`;
+  }
+
 }

@@ -14,6 +14,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { PlayersListComponent } from './players-list/players-list.component';
 import { FriendinvitesComponent } from './friendinvites/friendinvites.component';
 import { GamelistComponent } from './gamelist/gamelist.component';
+import { NewfriendinfoComponent } from './newfriendinfo/newfriendinfo.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { GamelistComponent } from './gamelist/gamelist.component';
     PlayersListComponent,
     FriendinvitesComponent,
     GamelistComponent,
+    NewfriendinfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import { GamelistComponent } from './gamelist/gamelist.component';
     ReactiveFormsModule,
     RouterModule,
     AppRoutingModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
