@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { unescapeLeadingUnderscores } from 'typescript';
 import { AccountService } from '../services/account.service';
 
@@ -9,7 +9,8 @@ describe('FriendsComponent', () => {
   let component: FriendsComponent;
   let fixture: ComponentFixture<FriendsComponent>;
 
-  const accountServiceSpy =  jasmine.createSpyObj('AccountService', ['getAllPlayers']);
+  const accountServiceSpy =  jasmine.createSpyObj('AccountService', ['getFriends']);
+  accountServiceSpy.getFriends.and.returnValue(of([]));
   accountServiceSpy.user = new Observable<undefined>();
 
 

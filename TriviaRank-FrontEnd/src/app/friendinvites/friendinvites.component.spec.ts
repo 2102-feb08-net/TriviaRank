@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AccountService } from '../services/account.service';
 import { OutboxService } from '../services/outbox.service';
 
@@ -13,14 +13,15 @@ describe('FriendinvitesComponent', () => {
   const accountServiceSpy =  jasmine.createSpyObj('AccountService', ['getAllPlayers']);
   accountServiceSpy.user = new Observable<undefined>();
   const outboxServiceSpy =  jasmine.createSpyObj('OutboxService', ['getPlayerFriendInvites']);
+  outboxServiceSpy.getPlayerFriendInvites.and.returnValue(of([]));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ FriendinvitesComponent ],
-      providers: [{
-        provide: [AccountService, OutboxService],
-        useValue: [accountServiceSpy, outboxServiceSpy]
-      }]
+      providers: [
+        { provide: AccountService, useValue: accountServiceSpy },
+        { provide: OutboxService, useValue: outboxServiceSpy }
+      ]
     })
     .compileComponents();
   });

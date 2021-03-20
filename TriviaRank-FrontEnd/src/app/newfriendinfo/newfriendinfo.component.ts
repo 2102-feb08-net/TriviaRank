@@ -37,9 +37,11 @@ export class NewfriendinfoComponent implements OnInit {
     }
 
     if (this.f && this.player?.username) {
-      console.log('here');
       this.outboxService.createPlayerInviteUsername(this.player?.username, this.f.username.value)
-        .subscribe(i => console.log(i));
+        .subscribe(i => {
+          console.log(`Created User invite with id ${i}`);
+          this.modalService.dismissAll();
+        });
     }
   }
 

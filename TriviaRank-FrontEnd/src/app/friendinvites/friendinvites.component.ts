@@ -31,15 +31,17 @@ export class FriendinvitesComponent implements OnInit {
   handleDeleteFriendInvite(friend: User): void {
     console.log('deleted friend invite');
     if (this.player && friend) {
+      const index = this.inviters.findIndex(f => f === friend);
+      this.inviters.splice(index, 1);
       this.accountService.createFriend(this.player.id, friend.id)
-        .subscribe(() => {console.log("created friend")});
+        .subscribe(() => {console.log('created friend'); });
     }
   }
 
   onFriendInviteClick(friend: User): void {
     if (this.player && friend) {
       this.outboxService.deleteFriendInvite(this.player.username, friend.username)
-        .subscribe(() => {this.handleDeleteFriendInvite(friend)});
+        .subscribe(() => {this.handleDeleteFriendInvite(friend); });
     }
   }
 

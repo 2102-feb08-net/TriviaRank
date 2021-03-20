@@ -73,7 +73,7 @@ export class AccountService {
       );
   }
 
-  createFriend(playerId:number, friendId:number): Observable<any> {
+  createFriend(playerId: number, friendId: number): Observable<any> {
     return this.httpClient.post<void>(`${this.baseUrl}/api/player/${playerId}/friend/${friendId}`, null)
       .pipe(
         retry(1),

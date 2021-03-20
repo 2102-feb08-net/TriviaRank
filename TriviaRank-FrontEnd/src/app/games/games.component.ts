@@ -10,14 +10,14 @@ import { AccountService } from '../services/account.service';
 })
 export class GamesComponent implements OnInit {
   public games?: Game[];
-  @Input() public player?: User;
+  public player?: User;
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.player = this.accountService.user;
     if (this.player) {
       this.accountService.getPlayerGames(this.player.id)
-        .subscribe(games => {this.games = games; console.log(games); });
+        .subscribe(games => {this.games = games; });
     }
   }
 
