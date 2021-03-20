@@ -7,7 +7,7 @@ import { Game } from '../models/Game';
   styleUrls: ['./gamelist.component.css']
 })
 export class GamelistComponent implements OnInit {
-  @Input() games?:Game[];
+  @Input() games?: Game[];
   constructor() { }
 
   ngOnInit(): void {

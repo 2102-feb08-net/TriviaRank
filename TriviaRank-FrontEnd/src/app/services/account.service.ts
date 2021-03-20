@@ -9,24 +9,26 @@ import { User } from '../models/User';
   providedIn: 'root'
 })
 export class AccountService {
-  public user: Observable<User>;
-  private userSubject: BehaviorSubject<User>;
-  private baseUrl:string = "https://triviarank-server.azurewebsites.net";
-  constructor(private httpClient: HttpClient) 
-  { 
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user') as any));
-    this.user = this.userSubject.asObservable();
+  public user?: User;
+  private baseUrl = 'https://triviarank-server.azurewebsites.net';
+
+  constructor(private httpClient: HttpClient)
+  {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      this.user = JSON.parse(userString);
+    }
   }
 
-  login(username:string, password:string) {
-    this.getByUsername(username).subscribe(p => {
-      localStorage.setItem('user', JSON.stringify(p));
-      this.userSubject.next(p);
-      this.user = this.userSubject.asObservable();
-    });
+  login(username: string, password: string): Observable<User> {
+    return this.getByUsername(username)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
   }
 
-  getAllPlayers()
+  getAllPlayers(): Observable<User[]>
   {
     return this.httpClient.get<User[]>(`${this.baseUrl}/api/players`)
       .pipe(
@@ -35,7 +37,7 @@ export class AccountService {
       );
   }
 
-  getByUsername(username: string)
+  getByUsername(username: string): Observable<User>
   {
     return this.httpClient.get<User>(`${this.baseUrl}/api/player/username/${username}`)
       .pipe(
@@ -44,7 +46,7 @@ export class AccountService {
       );
   }
 
-  getById(id: number)
+  getById(id: number): Observable<User>
   {
     return this.httpClient.get<User>(`${this.baseUrl}/api/player/id/${id}`)
       .pipe(
@@ -53,7 +55,7 @@ export class AccountService {
       );
   }
 
-  getFriends(playerId: number)
+  getFriends(playerId: number): Observable<number[]>
   {
     return this.httpClient.get<number[]>(`${this.baseUrl}/api/player/friend/${playerId}`)
       .pipe(
@@ -62,7 +64,7 @@ export class AccountService {
       );
   }
 
-  getPlayerGames(playerId: number)
+  getPlayerGames(playerId: number): Observable<Game[]>
   {
     return this.httpClient.get<Game[]>(`${this.baseUrl}/api/player/${playerId}/games`)
       .pipe(
@@ -71,7 +73,15 @@ export class AccountService {
       );
   }
 
-  private handleError(error: HttpErrorResponse) {
+  createFriend(playerId:number, friendId:number): Observable<any> {
+    return this.httpClient.post<void>(`${this.baseUrl}/api/player/${playerId}/friend/${friendId}`, null)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {

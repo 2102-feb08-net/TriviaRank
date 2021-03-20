@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { User } from '../models/User';
 
@@ -8,20 +8,24 @@ import { User } from '../models/User';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public user?:User;
-  constructor(private accountService: AccountService) 
+  @Input() public user?: User;
+  constructor(private accountService: AccountService)
   {
   }
 
   ngOnInit(): void {
-    this.accountService.user.subscribe(p => this.user = p);
+    this.user = this.accountService.user;
     if (this.user) {
       this.accountService.getByUsername(this.user.username)
-        .subscribe(p => {this.user = p; localStorage.setItem("user", JSON.stringify(this.user));});
+        .subscribe(p => {
+          this.user = p;
+          localStorage.setItem('user', JSON.stringify(this.user));
+          console.log(`retrieved player ${this.user.username}`);
+        });
     }
   }
 
-  formattedDate(date:Date)
+  formattedDate(date: Date): string
   {
     return `${new Date(date).toLocaleString()}`;
   }

@@ -16,32 +16,42 @@ export class LoginFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private accountService: AccountService,
-    ) 
-    { 
+    )
+    {
       this.form = this.formBuilder.group({
         username: ['', Validators.required],
         password: ['', Validators.required]
     });
     }
 
-  get f() { if (this.form) return this.form.controls; }
+  get f(): any { if (this.form) { return this.form.controls; } }
 
   ngOnInit(): void {
   }
 
-  onSubmit() {
-    this.submitted = true;
+  onSubmit(): void {
+    try {
+      this.submitted = true;
 
-    // stop here if form is invalid
-    if (this.form && this.form.invalid) {
-        return;
-    }
+      // stop here if form is invalid
+      if (this.form && this.form.invalid) {
+          return;
+      }
 
-    if (this.f)
-    {
-        this.accountService.login(this.f.username.value, this.f.password.value);
-    }
-    this.router.navigateByUrl('/home');
+      if (this.f)
+      {
+        this.accountService.login(this.f.username.value, this.f.password.value)
+          .subscribe(p => {
+            localStorage.setItem('user', JSON.stringify(p));
+            this.accountService.user = p;
+            this.router.navigateByUrl('/home');
+            console.log(`retrieved player ${p}`);
+          });
+      }
+  }
+  catch {
+    console.log(`Error Logging in`);
+  }
 }
 
 }

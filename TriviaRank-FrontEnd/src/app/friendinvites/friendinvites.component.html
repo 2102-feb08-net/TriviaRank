@@ -20,7 +20,7 @@
             <tr>
                 <td class="align-middle">{{player.id}}</td>
                 <td class="align-middle">{{player.username}}</td>
-                <td><button type="button" class="btn btn-success">Accept</button></td>
+                <td><button type="button" class="btn btn-success" (click)="onFriendInviteClick(player)">Accept</button></td>
             </tr>
         </tbody>
     </table>

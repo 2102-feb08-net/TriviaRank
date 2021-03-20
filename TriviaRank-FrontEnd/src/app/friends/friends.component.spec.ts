@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Observable } from 'rxjs';
+import { unescapeLeadingUnderscores } from 'typescript';
+import { AccountService } from '../services/account.service';
 
 import { FriendsComponent } from './friends.component';
 
@@ -6,9 +9,14 @@ describe('FriendsComponent', () => {
   let component: FriendsComponent;
   let fixture: ComponentFixture<FriendsComponent>;
 
+  const accountServiceSpy =  jasmine.createSpyObj('AccountService', ['getAllPlayers']);
+  accountServiceSpy.user = new Observable<undefined>();
+
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FriendsComponent ]
+      declarations: [ FriendsComponent ],
+      providers: [{provide: AccountService, useValue: accountServiceSpy}]
     })
     .compileComponents();
   });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { of } from 'rxjs';
 import { AccountService } from './services/account.service';
 import { User } from './models/User';
@@ -10,10 +10,10 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  user?: User;
+  @Input() user?: User;
   title = 'TriviaRank-FrontEnd';
 
   constructor(private accountService: AccountService) {
-    this.accountService.user.subscribe(x => this.user = x);
+    this.user = accountService.user;
   }
 }

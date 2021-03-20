@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+  const httpClient: HttpClient = {} as HttpClient;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [

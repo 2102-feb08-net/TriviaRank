@@ -7,7 +7,7 @@ import { User } from '../models/User';
   styleUrls: ['./players-list.component.css']
 })
 export class PlayersListComponent implements OnInit {
-  @Input() players:User[] = [];
+  @Input() players: User[] = [];
   constructor() { }
 
   ngOnInit(): void {

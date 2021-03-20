@@ -6,6 +6,6 @@ import { User } from '../models/User';
   providedIn: 'root'
 })
 export class GameService {
-  private baseUrl:string = "https://triviarank-server.azurewebsites.net";
-  constructor(private httpClient:HttpClient) { }
+  private baseUrl = 'https://triviarank-server.azurewebsites.net';
+  constructor(private httpClient: HttpClient) { }
 }
