@@ -8,7 +8,7 @@ import { User } from '../models/User';
 
 })
 export class FriendsComponent implements OnInit {
-  @Input() public user?: User;
+  public user?: User;
   public friends: User[] = [];
   constructor(private userService: AccountService) { }
 
