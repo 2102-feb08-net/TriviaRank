@@ -81,7 +81,7 @@ export class PlayersListComponent implements OnInit {
           this.messages =
             this.messages.slice(Math.max(this.messages.length - 10, 0));
           if (times > 0) {
-            this.getMessages(player, other, times-1);
+            this.getMessages(player, other, times - 1);
           }
         });
     }

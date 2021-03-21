@@ -1,0 +1,14 @@
+<div *ngIf="game">
+    <h4>{{game.gameName}}</h4>
+    <p>Start: {{game.startDate}} End: {{game.endDate}}</p>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Trivia!</h4>
+    </div>
+    <div class="modal-body">
+    </div>
+</ng-template>
+
+<button *ngIf="active" class="btn btn-lg btn-outline-primary" (click)="open(content)">Play</button>

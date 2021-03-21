@@ -38,7 +38,8 @@ export class FriendinvitesComponent implements OnInit {
     }
   }
 
-  onFriendInviteClick(friend: User): void {
+  onFriendInviteClick(friend: User, button: any): void {
+    button.disabled = true;
     if (this.player && friend) {
       this.outboxService.deleteFriendInvite(this.player.username, friend.username)
         .subscribe(() => {this.handleDeleteFriendInvite(friend); });

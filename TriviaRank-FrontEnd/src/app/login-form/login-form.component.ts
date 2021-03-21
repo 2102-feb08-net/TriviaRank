@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit {
             console.log(`retrieved player ${p}`);
           });
       }
-  }
+    }
   catch {
     console.log(`Error Logging in`);
   }

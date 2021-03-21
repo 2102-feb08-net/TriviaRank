@@ -1,20 +1,7 @@
-<div class="table-responsive">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <td>ID</td>
-                <td>Game Name</td>
-                <td>Start Date</td>
-                <td>End Date</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let game of games">
-                <td>{{game.id}}</td>
-                <td>{{game.gameName}}</td>
-                <td>{{formattedDate(game.startDate)}}</td>
-                <td>{{formattedDate(game.endDate)}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<ngb-accordion [closeOthers]="true" #acc="ngbAccordion" *ngFor="let game of games">
+    <ngb-panel title={{game.gameName}}>
+      <ng-template ngbPanelContent>
+          <app-game [game]="game"></app-game>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>

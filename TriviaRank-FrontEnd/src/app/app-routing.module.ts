@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FriendinvitesComponent } from './friendinvites/friendinvites.component';
 import { FriendsComponent } from './friends/friends.component';
+import { GameComponent } from './game/game.component';
 import { GamesComponent } from './games/games.component';
 import { HomeComponent } from './home/home.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'leaderboard', component: LeaderboardComponent},
   { path: 'friends', component: FriendsComponent},
   { path: 'friendinvites', component: FriendinvitesComponent},
+  { path: 'game/:gameId', component: GameComponent},
 
 ];
 

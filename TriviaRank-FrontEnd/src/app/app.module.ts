@@ -16,6 +16,7 @@ import { FriendinvitesComponent } from './friendinvites/friendinvites.component'
 import { GamelistComponent } from './gamelist/gamelist.component';
 import { NewfriendinfoComponent } from './newfriendinfo/newfriendinfo.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FriendinvitesComponent,
     GamelistComponent,
     NewfriendinfoComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule,

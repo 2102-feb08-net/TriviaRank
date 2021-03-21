@@ -16,5 +16,4 @@ export class GamelistComponent implements OnInit {
   formattedDate(date: Date): string {
     return `${new Date(date).toLocaleString()}`;
   }
-
 }
