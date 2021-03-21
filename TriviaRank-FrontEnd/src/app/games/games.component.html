@@ -1,1 +1,24 @@
 <app-gamelist [games]="games"></app-gamelist>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Game Information</h4>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="newgamename">Game Name</label>
+            <input *ngIf="f" type="text" formControlName="newgamename" class="form-control" [class.is-invalid]=" submitted && f.newgamename.errors "/>
+            <label for="gamelength">Length (Minutes)</label>
+            <input *ngIf="f" type="number" formControlName="gamelength" class="form-control" [class.is-invalid]=" submitted && f.gamelength.errors "/>
+            <label for="numquestions">Total Questions</label>
+            <input *ngIf="f" type="number" formControlName="numquestions" class="form-control" [class.is-invalid]=" submitted && f.numquestions.errors "/>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-outline-dark" [disabled]="submitted">Add</button>
+        </div>
+      </form>
+    </div>
+</ng-template>
+  
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">New Game</button>

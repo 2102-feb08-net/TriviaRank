@@ -1,10 +1,10 @@
 export interface Game {
     id: number;
     gameName: string;
-    ownerId: string;
+    ownerId: number;
     startDate: Date;
     endDate: Date;
-    gameDode: boolean;
+    gameMode: boolean;
     totalQuestions: number;
     isPublic: boolean;
 }
