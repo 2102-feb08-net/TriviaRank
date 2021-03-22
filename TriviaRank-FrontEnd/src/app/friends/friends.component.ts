@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { User } from '../models/User';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-friends',
@@ -16,14 +18,32 @@ export class FriendsComponent implements OnInit {
     this.user = this.userService.user;
     if (this.user) {
       this.userService.getFriends(this.user.id)
-        .subscribe(friendsIds => {this.convertFriendIdsToUser(friendsIds); });
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
+        .subscribe(friendsIds => {
+          if (Array.isArray(friendsIds)) {
+            this.convertFriendIdsToUser(friendsIds);
+          }
+        });
     }
   }
 
   convertFriendIdsToUser(friendIds: number[]): void {
     for (const id of friendIds) {
       this.userService.getById(id)
-        .subscribe(p => this.friends.push(p));
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
+        .subscribe(p => {
+          if (p.hasOwnProperty('username')) {
+            this.friends.push(p);
+          }
+        });
     }
   }
 

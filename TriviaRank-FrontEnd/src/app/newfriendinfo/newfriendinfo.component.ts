@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { User } from '../models/User';
 import { OutboxService } from '../services/outbox.service';
 
@@ -38,9 +40,16 @@ export class NewfriendinfoComponent implements OnInit {
 
     if (this.f && this.player?.username) {
       this.outboxService.createPlayerInviteUsername(this.player?.username, this.f.username.value)
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
         .subscribe(i => {
-          console.log(`Created User invite with id ${i}`);
-          this.modalService.dismissAll();
+          if (!isNaN(i)) {
+            console.log(`Created User invite with id ${i}`);
+            this.modalService.dismissAll();
+          }
         });
     }
   }

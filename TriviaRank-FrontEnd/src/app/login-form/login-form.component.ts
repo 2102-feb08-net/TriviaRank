@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -30,28 +32,30 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    try {
-      this.submitted = true;
+    this.submitted = true;
 
-      // stop here if form is invalid
-      if (this.form && this.form.invalid) {
-          return;
-      }
+    // stop here if form is invalid
+    if (this.form && this.form.invalid) {
+        return;
+    }
 
-      if (this.f)
-      {
-        this.accountService.login(this.f.username.value, this.f.password.value)
-          .subscribe(p => {
+    if (this.f)
+    {
+      this.accountService.login(this.f.username.value, this.f.password.value)
+        .pipe(
+          catchError(err => {
+            this.submitted = false;
+            return of(err);
+          })
+        )
+        .subscribe(p => {
+          if (p.hasOwnProperty('username')) {
             localStorage.setItem('user', JSON.stringify(p));
             this.accountService.user = p;
             this.router.navigateByUrl('/home');
             console.log(`retrieved player ${p}`);
-          });
-      }
+          }
+        });
     }
-  catch {
-    console.log(`Error Logging in`);
   }
-}
-
 }

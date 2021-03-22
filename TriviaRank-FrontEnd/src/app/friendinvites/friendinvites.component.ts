@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { User } from '../models/User';
 import { OutboxService } from '../services/outbox.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -24,7 +26,16 @@ export class FriendinvitesComponent implements OnInit {
     if (this.player)
     {
       this.outboxService.getPlayerFriendInvites(this.player.id)
-        .subscribe(players => {this.inviters = players; });
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
+        .subscribe(players => {
+          if (Array.isArray(players)) {
+            this.inviters = players;
+          }
+        });
     }
   }
 
@@ -34,6 +45,11 @@ export class FriendinvitesComponent implements OnInit {
       const index = this.inviters.findIndex(f => f === friend);
       this.inviters.splice(index, 1);
       this.accountService.createFriend(this.player.id, friend.id)
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
         .subscribe(() => {console.log('created friend'); });
     }
   }
@@ -42,6 +58,11 @@ export class FriendinvitesComponent implements OnInit {
     button.disabled = true;
     if (this.player && friend) {
       this.outboxService.deleteFriendInvite(this.player.username, friend.username)
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
         .subscribe(() => {this.handleDeleteFriendInvite(friend); });
     }
   }

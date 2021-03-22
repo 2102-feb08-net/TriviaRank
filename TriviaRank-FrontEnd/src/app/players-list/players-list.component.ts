@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Message } from '../models/Message';
 import { User } from '../models/User';
 import { MessageService } from '../services/message.service';
@@ -28,7 +30,16 @@ export class PlayersListComponent implements OnInit {
     });
     if (this.player && this.other) {
       this.messageService.getPlayerMessages(this.player.id, this.other.id)
-        .subscribe(m => {this.messages = m; });
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
+        .subscribe(m => {
+          if (Array.isArray(m)) {
+            this.messages = m;
+          }
+        });
     }
   }
 
@@ -58,11 +69,18 @@ export class PlayersListComponent implements OnInit {
       this.form.reset();
       this.submitted = false;
       this.messageService.createPlayerMessage(newMessage)
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
         .subscribe(messageId => {
-          console.log(`created message with id ${messageId}`);
-          this.messages.push(newMessage);
-          if (this.messages.length >= 10) {
-            this.messages.shift();
+          if (!isNaN(messageId)) {
+            console.log(`created message with id ${messageId}`);
+            this.messages.push(newMessage);
+            if (this.messages.length >= 10) {
+              this.messages.shift();
+            }
           }
         });
     }
@@ -71,17 +89,24 @@ export class PlayersListComponent implements OnInit {
   getMessages(other: User, player: User, times: number): void {
     if (player) {
       this.messageService.getPlayerMessages(other.id, player.id)
+        .pipe(
+          catchError(err => {
+            return of(err);
+          })
+        )
         .subscribe(m => {
-          this.messages = this.messages.concat(m);
-          this.messages.sort((m1, m2) => {
-            const d2 = new Date(m2.date);
-            const d1 = new Date(m1.date);
-            return d1.getTime() - d2.getTime();
-          });
-          this.messages =
-            this.messages.slice(Math.max(this.messages.length - 10, 0));
-          if (times > 0) {
-            this.getMessages(player, other, times - 1);
+          if (Array.isArray(m)) {
+            this.messages = this.messages.concat(m);
+            this.messages.sort((m1, m2) => {
+              const d2 = new Date(m2.date);
+              const d1 = new Date(m1.date);
+              return d1.getTime() - d2.getTime();
+            });
+            this.messages =
+              this.messages.slice(Math.max(this.messages.length - 10, 0));
+            if (times > 0) {
+              this.getMessages(player, other, times - 1);
+            }
           }
         });
     }
