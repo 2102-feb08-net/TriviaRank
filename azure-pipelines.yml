@@ -1,19 +1,71 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - TriviaRank-FrontEnd
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  appDirectory: TriviaRank-FrontEnd
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
+
+- script: npm ci
+  displayName: npm install
+  workingDirectory: $(appDirectory)
+
+- script: npx ng build
+  displayName: ng build
+  workingDirectory: $(appDirectory)
+
+- script: npx ng lint
+  displayName: ng lint
+  workingDirectory: $(appDirectory)
+
+- script: npx ng test --browsers ChromeHeadless --no-watch --code-coverage
+  displayName: ng test
+  workingDirectory: $(appDirectory)
+
+# ng e2e... exercise for the reader
+
+- task: SonarCloudPrepare@1
+  displayName: sonar prepare
+  inputs:
+    SonarCloud: 'sonar-cloud-trivia'
+    organization: '2102-feb08-net'
+    scannerMode: 'MSBuild'
+    configMode: 'manual'
+    cliProjectKey: '2102-feb08-net_TriviaRank'
+    cliProjectName: 'trivia-front-end'
+    cliSources: '$(appDirectory)/src'
+    extraProperties: 'sonar.javascript.lcov.reportPaths=$(appDirectory)/coverage/TriviaRank-FrontEnd/lcov.info'
+
+- task: SonarCloudAnalyze@1
+  displayName: sonar run analysis
+
+- task: SonarCloudPublish@1
+  displayName: sonar publish analysis result
+  inputs:
+    pollingTimeoutSec: '300'
+
+- task: AzureRmWebAppDeployment@4
+  displayName: app service deploy
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(3108cf2f-4c35-4864-8dad-b97042f1dd42)'
+    appType: 'webApp'
+    WebAppName: 'TriviaRank-Web'
+    packageForLinux: '$(appDirectory)/dist/TriviaRank-FrontEnd'
