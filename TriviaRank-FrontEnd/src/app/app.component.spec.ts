@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { OktaAuthService } from '@okta/okta-angular';
 import { Observable } from 'rxjs';
 import { AppComponent } from './app.component';
 import { AccountService } from './services/account.service';
@@ -13,18 +14,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      providers: [{provide: AccountService, useValue: accountServiceSpy}]
+      providers: [
+        {provide: AccountService, useValue: accountServiceSpy},
+      ]
     }).compileComponents();
-  });
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'TriviaRank-FrontEnd'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
   });
 });
