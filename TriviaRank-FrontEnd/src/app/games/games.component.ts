@@ -62,7 +62,7 @@ export class GamesComponent implements OnInit {
           .subscribe(g => {
             this.games?.push(g);
             this.modalService.dismissAll();
-          })
+          });
     }
   }
 

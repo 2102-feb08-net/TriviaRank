@@ -7,7 +7,18 @@
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Trivia!</h4>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" >
+      <div *ngIf="questions.length > 0 && index < questions.length">
+        <h4>Question {{index + 1}}</h4>
+        <h5>{{questions[index].question}}</h5>
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action">{{questions[index].correctAnswer}}</a>
+          <div *ngFor="let wrong of questions[index].wrongAnswers">
+            <a class="list-group-item list-group-item-action">wrong</a>
+          </div>
+        </div>
+        <button *ngIf="active" class="btn btn-lg btn-outline-primary" (click)="incrementIndex()">Next</button>
+      </div>
     </div>
 </ng-template>
 
