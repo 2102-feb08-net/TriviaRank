@@ -9,7 +9,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 
 const routes: Routes = [
-  { path: 'implicit/callback', component: OktaCallbackComponent },
+  { path: 'login/callback', component: OktaCallbackComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},
   { path: 'games', component: GamesComponent, canActivate: [OktaAuthGuard] },

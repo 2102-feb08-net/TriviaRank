@@ -26,7 +26,6 @@ export class AccountService {
       )
       .subscribe(u => {
         if (u.hasOwnProperty('username')) {
-          console.log('hello');
           this.myUserSubject.next(u);
         }
       });
