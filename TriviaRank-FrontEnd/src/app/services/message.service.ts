@@ -3,12 +3,13 @@ import { Injectable, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Message } from '../models/Message';
 import { User } from '../models/User';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-  private baseUrl = 'https://triviarank-server.azurewebsites.net';
+  private baseUrl = environment.emailApiBaseUrl;
   constructor(private http: HttpClient) { }
 
   getPlayerMessages(playerId: number, friendId: number): Observable<Message[]> {

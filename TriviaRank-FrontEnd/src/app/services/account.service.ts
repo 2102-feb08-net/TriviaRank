@@ -4,13 +4,14 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Game } from '../models/Game';
 import { User } from '../models/User';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   public user?: User;
-  private baseUrl = 'https://triviarank-server.azurewebsites.net';
+  private baseUrl = environment.emailApiBaseUrl;
 
   constructor(private httpClient: HttpClient)
   {
