@@ -25,12 +25,9 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/TriviaRank-FrontEnd'),
-      subdir: '.',
-      reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
-      ]
+      dir: require("path").join(__dirname, "./coverage/email-ui"),
+      subdir: ".",
+      reporters: [{ type: "html" }, { type: "text-summary" }, { type: "lcov" }],
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
