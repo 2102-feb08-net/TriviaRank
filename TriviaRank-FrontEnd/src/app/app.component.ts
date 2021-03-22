@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { AccountService } from './services/account.service';
 import { User } from './models/User';
 import { RouterModule } from '@angular/router';
+import { OktaAuthService } from '@okta/okta-angular';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,15 @@ import { RouterModule } from '@angular/router';
 export class AppComponent {
   @Input() user?: User;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private oktaAuth: OktaAuthService) {
     accountService.user?.subscribe(p => {
       if (p) {
         this.user = p;
       }
     });
+  }
+
+  logOut(): void {
+    this.oktaAuth.signOut();
   }
 }
