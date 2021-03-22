@@ -10,23 +10,26 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AccountService {
-  public user?: User;
+  private myUserSubject = new BehaviorSubject<User | null>(null);
+  public user: Observable<User | null> = this.myUserSubject.asObservable();
   private baseUrl = environment.emailApiBaseUrl;
 
   constructor(private httpClient: HttpClient)
   {
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      this.user = JSON.parse(userString);
-    }
   }
 
-  login(username: string, password: string): Observable<User> {
-    return this.getByUsername(username)
+  login(username: string): void {
+    this.getByUsername(username)
       .pipe(
         retry(1),
         catchError(this.handleError)
-      );
+      )
+      .subscribe(u => {
+        if (u.hasOwnProperty('username')) {
+          console.log('hello');
+          this.myUserSubject.next(u);
+        }
+      });
   }
 
   getAllPlayers(): Observable<User[]>

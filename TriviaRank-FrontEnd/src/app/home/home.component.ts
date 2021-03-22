@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { User } from '../models/User';
+import { environment } from 'src/environments/environment';
+import { OktaAuthService } from '@okta/okta-angular';
+import { UserClaims } from '@okta/okta-auth-js';
 
 @Component({
   selector: 'app-home',
@@ -8,21 +11,29 @@ import { User } from '../models/User';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  @Input() public user?: User;
-  constructor(private accountService: AccountService)
-  {
-  }
+  isAuthenticated = false;
+  oktaUser: UserClaims | null = null;
+  okta = environment.okta;
+  public user?: User;
 
-  ngOnInit(): void {
-    this.user = this.accountService.user;
-    if (this.user) {
-      this.accountService.getByUsername(this.user.username)
-        .subscribe(p => {
-          this.user = p;
-          localStorage.setItem('user', JSON.stringify(this.user));
-          console.log(`retrieved player ${this.user.username}`);
-        });
+  constructor(private accountService: AccountService, private oktaAuth: OktaAuthService){
+    this.oktaAuth.$authenticationState
+      .subscribe(isAuthenticated => {
+        this.isAuthenticated = isAuthenticated;
+      });
+   }
+
+  async ngOnInit(): Promise<void> {
+    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+    this.oktaUser = await this.oktaAuth.getUser();
+    if (this.oktaUser.email) {
+      this.accountService.login(this.oktaUser.email);
     }
+    this.accountService.user.subscribe(p => {
+      if (p) {
+        this.user = p;
+      }
+    });
   }
 
   formattedDate(date: Date): string
@@ -30,4 +41,11 @@ export class HomeComponent implements OnInit {
     return `${new Date(date).toLocaleString()}`;
   }
 
+  login(): void {
+    this.oktaAuth.signInWithRedirect();
+  }
+
+  logout(): void {
+    this.oktaAuth.signOut();
+  }
 }

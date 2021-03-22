@@ -11,9 +11,12 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent {
   @Input() user?: User;
-  title = 'TriviaRank-FrontEnd';
 
   constructor(private accountService: AccountService) {
-    this.user = accountService.user;
+    accountService.user?.subscribe(p => {
+      if (p) {
+        this.user = p;
+      }
+    });
   }
 }

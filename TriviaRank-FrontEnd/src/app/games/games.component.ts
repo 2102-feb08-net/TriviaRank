@@ -28,13 +28,16 @@ export class GamesComponent implements OnInit {
         gamelength: ['', Validators.required],
         numquestions: ['', Validators.required],
       });
+      accountService.user.subscribe(p => {
+        if (p) {
+          this.player = p;
+        }
+      });
     }
 
   get f(): any { if (this.form) { return this.form.controls; } }
 
   ngOnInit(): void {
-    this.player = this.accountService.user;
-
     if (this.player) {
       this.accountService.getPlayerGames(this.player.id)
         .pipe(

@@ -1,5 +1,14 @@
-<div *ngIf="user">
-    <h2>Welcome {{user.username}} [{{user.firstName}} {{user.lastName}}]!</h2>
+<div *ngIf="isAuthenticated && user">
+    <h2>Welcome {{user.username}}!</h2>
     <h3>Points : {{user.points}}</h3>
     <h3>Birthday : {{formattedDate(user.birthday)}}</h3>
+</div>
+
+<div *ngIf="!isAuthenticated">
+    <button class="btn btn-primary" (click)="login()">
+        Login
+    </button>
+    <button class="btn btn-primary" (click)="logout()">
+        Logout
+    </button>
 </div>
