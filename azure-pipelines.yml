@@ -39,8 +39,6 @@ steps:
   displayName: ng test
   workingDirectory: $(appDirectory)
 
-# ng e2e... exercise for the reader
-
 - task: SonarCloudPrepare@1
   displayName: sonar prepare
   inputs:
@@ -48,9 +46,8 @@ steps:
     organization: '2102-feb08-net'
     scannerMode: 'MSBuild'
     configMode: 'manual'
-    cliProjectKey: '2102-feb08-net_TriviaRank'
-    cliProjectName: 'trivia-front-end'
-    cliSources: '$(appDirectory)/src'
+    projectKey: '2102-feb08-net_TriviaRank'
+    projectName: 'trivia-front-end'
     extraProperties: 'sonar.javascript.lcov.reportPaths=$(appDirectory)/coverage/TriviaRank-FrontEnd/lcov.info'
 
 - task: SonarCloudAnalyze@1
