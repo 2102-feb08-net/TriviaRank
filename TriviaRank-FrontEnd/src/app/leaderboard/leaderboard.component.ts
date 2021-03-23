@@ -24,7 +24,6 @@ export class LeaderboardComponent implements OnInit {
           if (!isNaN(num)) {
             this.totalPlayers = num;
           }
-          console.log(this.totalPlayers);
         });
   }
 

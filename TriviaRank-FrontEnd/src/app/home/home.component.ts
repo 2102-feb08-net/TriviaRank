@@ -13,7 +13,7 @@ import { of } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  isAuthenticated = false;
+  isAuthenticated = true;
   oktaUser: UserClaims | null = null;
   okta = environment.okta;
   user?: User;
