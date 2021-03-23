@@ -12,10 +12,15 @@ import { catchError } from 'rxjs/operators';
 export class FriendsComponent implements OnInit {
   public user?: User;
   public friends: User[] = [];
-  constructor(private userService: AccountService) { }
+  constructor(private userService: AccountService) {
+    userService.user.subscribe(p => {
+      if (p) {
+        this.user = p;
+      }
+    });
+   }
 
   ngOnInit(): void {
-    this.user = this.userService.user;
     if (this.user) {
       this.userService.getFriends(this.user.id)
         .pipe(

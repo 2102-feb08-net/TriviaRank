@@ -1,3 +1,8 @@
 <div>
     <app-players-list [players]="players"></app-players-list>
 </div>
+<ngb-pagination 
+    [collectionSize]="totalPlayers"
+    [pageSize]="pageSize"
+    (pageChange)="changePage($event)"
+    [directionLinks]="false"></ngb-pagination>

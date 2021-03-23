@@ -6,17 +6,17 @@ import { GameComponent } from './game/game.component';
 import { GamesComponent } from './games/games.component';
 import { HomeComponent } from './home/home.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 
 const routes: Routes = [
-  { path: 'login', component: LoginFormComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login/callback', component: OktaCallbackComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent},
-  { path: 'games', component: GamesComponent},
-  { path: 'leaderboard', component: LeaderboardComponent},
-  { path: 'friends', component: FriendsComponent},
-  { path: 'friendinvites', component: FriendinvitesComponent},
-  { path: 'game/:gameId', component: GameComponent},
+  { path: 'games', component: GamesComponent, canActivate: [OktaAuthGuard] },
+  { path: 'leaderboard', component: LeaderboardComponent, canActivate: [OktaAuthGuard] },
+  { path: 'friends', component: FriendsComponent, canActivate: [OktaAuthGuard] },
+  { path: 'friendinvites', component: FriendinvitesComponent, canActivate: [OktaAuthGuard] },
+  { path: 'game/:gameId', component: GameComponent, canActivate: [OktaAuthGuard] },
 
 ];
 

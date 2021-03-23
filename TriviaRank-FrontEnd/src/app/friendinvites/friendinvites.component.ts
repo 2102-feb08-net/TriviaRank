@@ -17,9 +17,12 @@ export class FriendinvitesComponent implements OnInit {
 
   constructor(
     private outboxService: OutboxService,
-    private accountService: AccountService
-    ) {
-      this.player = accountService.user;
+    private accountService: AccountService ) {
+      accountService.user.subscribe(p => {
+        if (p) {
+          this.player = p;
+        }
+      });
     }
 
   ngOnInit(): void {

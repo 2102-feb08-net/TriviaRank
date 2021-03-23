@@ -5,28 +5,34 @@ import { catchError, retry } from 'rxjs/operators';
 import { Game } from '../models/Game';
 import { User } from '../models/User';
 import { environment } from 'src/environments/environment';
+import { OktaAuthService } from '@okta/okta-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  public user?: User;
+  public myUserSubject = new BehaviorSubject<User | null>(null);
+  public user: Observable<User | null> = this.myUserSubject.asObservable();
   private baseUrl = environment.emailApiBaseUrl;
 
-  constructor(private httpClient: HttpClient)
+  constructor(private httpClient: HttpClient, private oktaAuth: OktaAuthService)
   {
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      this.user = JSON.parse(userString);
-    }
-  }
-
-  login(username: string, password: string): Observable<User> {
-    return this.getByUsername(username)
-      .pipe(
-        retry(1),
-        catchError(this.handleError)
-      );
+    oktaAuth.$authenticationState.subscribe(async isAuthenticated => {
+      if (isAuthenticated) {
+        const oktaUser = await this.oktaAuth.getUser();
+        if (oktaUser.email) {
+          this.getByUsername(oktaUser.email)
+            .pipe(catchError(err => {
+              oktaAuth.signOut();
+              return of(err);
+            }))
+            .subscribe(p => {
+              this.myUserSubject.next(p);
+              this.user = this.myUserSubject.asObservable();
+            });
+        }
+      }
+    });
   }
 
   getAllPlayers(): Observable<User[]>
@@ -36,6 +42,24 @@ export class AccountService {
         retry(1),
         catchError(this.handleError)
       );
+  }
+
+  getTotalPlayers(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/api/players/amount`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  getNPlayers(numPlayers: number, currentPage: number): Observable<User[]>
+  {
+    return this.httpClient.get<User[]>
+      (`${this.baseUrl}/api/players/amount/${numPlayers}/index/${currentPage - 1}`)
+        .pipe(
+          retry(1),
+          catchError(this.handleError)
+        );
   }
 
   getByUsername(username: string): Observable<User>

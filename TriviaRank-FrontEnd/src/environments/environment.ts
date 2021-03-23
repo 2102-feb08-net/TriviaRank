@@ -1,10 +1,17 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+import { OktaConfig } from '@okta/okta-angular';
+
+const oktaConfig: OktaConfig = {
+  issuer: 'https://dev-94937278.okta.com/oauth2/default',
+  clientId: '0oaciacosBeR7pTc05d6',
+  redirectUri: `${location.origin}/login/callback`,
+  pkce: true,
+  scopes: ['openid', 'profile', 'email'],
+};
 
 export const environment = {
   production: false,
-  emailApiBaseUrl: 'https://triviarank-server.azurewebsites.net',
+  emailApiBaseUrl: 'https://localhost:44329',
+  okta: oktaConfig,
 };
 
 /*

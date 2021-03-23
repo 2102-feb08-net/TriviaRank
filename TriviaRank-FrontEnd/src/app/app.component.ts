@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { AccountService } from './services/account.service';
 import { User } from './models/User';
 import { RouterModule } from '@angular/router';
+import { OktaAuthService } from '@okta/okta-angular';
 
 // a small change
 
@@ -12,10 +13,17 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @Input() user?: User;
-  title = 'TriviaRank-FrontEnd';
+  user?: User;
 
-  constructor(private accountService: AccountService) {
-    this.user = accountService.user;
+  constructor(private accountService: AccountService, private oktaAuth: OktaAuthService) {
+    accountService.user.subscribe(p => {
+      if (p) {
+        this.user = p;
+      }
+    });
+  }
+
+  logOut(): void {
+    this.oktaAuth.signOut();
   }
 }

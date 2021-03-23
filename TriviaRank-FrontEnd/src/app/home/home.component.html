@@ -1,5 +1,16 @@
 <div *ngIf="user">
-    <h2>Welcome {{user.username}} [{{user.firstName}} {{user.lastName}}]!</h2>
+    <h2>Welcome {{user.username}}!</h2>
     <h3>Points : {{user.points}}</h3>
     <h3>Birthday : {{formattedDate(user.birthday)}}</h3>
+</div>
+
+<div class="card" *ngIf="!user">
+    <div class="card-header">
+        Login
+      </div>
+    <div class="card-body">
+        <button class="btn btn-primary" (click)="login()" [disabled]="isAuthenticated">
+            Login
+        </button>
+    </div>
 </div>
