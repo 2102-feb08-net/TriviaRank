@@ -7,4 +7,5 @@ export interface Game {
     gameMode: boolean;
     totalQuestions: number;
     isPublic: boolean;
+    Duration: number;
 }

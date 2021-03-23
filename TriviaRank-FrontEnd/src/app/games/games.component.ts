@@ -72,6 +72,7 @@ export class GamesComponent implements OnInit {
           endDate: new Date(Date.now() + this.f.gamelength.value * 60000),
           gameMode: true,
           isPublic: true,
+          Duration: this.f.gamelength.value
         };
         this.gameService.createGame(newGame)
           .pipe(
