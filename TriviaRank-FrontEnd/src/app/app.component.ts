@@ -4,6 +4,8 @@ import { AccountService } from './services/account.service';
 import { User } from './models/User';
 import { RouterModule } from '@angular/router';
 
+// a small change
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
