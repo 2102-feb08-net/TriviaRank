@@ -4,8 +4,13 @@
     <h3>Birthday : {{formattedDate(user.birthday)}}</h3>
 </div>
 
-<div *ngIf="!isAuthenticated">
-    <button class="btn btn-primary" (click)="login()">
+<div class="card" *ngIf="!isAuthenticated">
+    <div class="card-header">
         Login
-    </button>
+      </div>
+    <div class="card-body">
+        <button class="btn btn-primary" (click)="login()">
+            Login
+        </button>
+    </div>
 </div>
