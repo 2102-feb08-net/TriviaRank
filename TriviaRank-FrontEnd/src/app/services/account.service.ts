@@ -20,19 +20,35 @@ export class AccountService {
     oktaAuth.$authenticationState.subscribe(async isAuthenticated => {
       if (isAuthenticated) {
         const oktaUser = await this.oktaAuth.getUser();
-        if (oktaUser.email) {
-          this.getByUsername(oktaUser.email)
-            .pipe(catchError(err => {
-              oktaAuth.signOut();
-              return of(err);
-            }))
-            .subscribe(p => {
+        const toAddPlayer: User = {
+          id: 1,
+          username: oktaUser.email ? oktaUser.email : 'random@gmail.com',
+          password: 'notused',
+          firstName: oktaUser.given_name ? this.createName(oktaUser.given_name) : 'First',
+          lastName: oktaUser.family_name ? this.createName(oktaUser.family_name) : 'Last',
+          points: 0,
+          birthday: new Date(Date.now())
+        };
+        this.createOrGetPlayer(toAddPlayer)
+          .pipe(catchError(err => {
+            oktaAuth.signOut();
+            return of(err);
+          }))
+          .subscribe(p => {
+            if (p.hasOwnProperty('firstName')) {
               this.myUserSubject.next(p);
-              this.user = this.myUserSubject.asObservable();
-            });
-        }
+            }
+          });
       }
     });
+  }
+
+  createName(rawName: string): string {
+    return rawName[0].toUpperCase() + rawName.substring(1).toLowerCase();
+  }
+
+  createOrGetPlayer(player: User): Observable<User> {
+    return this.httpClient.post<User>(`${this.baseUrl}/api/player`, player);
   }
 
   getAllPlayers(): Observable<User[]>
