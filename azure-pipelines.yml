@@ -39,6 +39,25 @@ steps:
   displayName: ng test
   workingDirectory: $(appDirectory)
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'sonar-cloud-trivia'
+    organization: '2102-feb08-net'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: '2102-feb08-net_TriviaRank'
+    cliProjectName: 'TriviaRank-FrontEnd'
+    cliSources: '$(appDirectory)/src'
+    extraProperties: 'sonar.javascript.lcov.reportPaths=$(appDirectory)/coverage/TriviaRank-FrontEnd/lcov.info'
+
+- task: SonarCloudAnalyze@1
+  displayName: sonar run analysis
+
+- task: SonarCloudPublish@1
+  displayName: sonar publish analysis result
+  inputs:
+    pollingTimeoutSec: '300'
+
 - task: AzureRmWebAppDeployment@4
   displayName: app service deploy
   inputs:
