@@ -4,6 +4,8 @@ import { User } from '../models/User';
 import { environment } from 'src/environments/environment';
 import { OktaAuthService } from '@okta/okta-angular';
 import { UserClaims } from '@okta/okta-auth-js';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -28,13 +30,16 @@ export class HomeComponent implements OnInit {
     if (this.isAuthenticated) {
       this.oktaUser = await this.oktaAuth.getUser();
       if (this.oktaUser.email) {
-        this.accountService.login(this.oktaUser.email);
+        this.accountService.getByUsername(this.oktaUser.email)
+          .pipe(catchError(err => {
+            this.logout();
+            return of(err);
+          }))
+          .subscribe(p => {
+            this.accountService.myUserSubject.next(p);
+            this.user = p;
+          });
       }
-      this.accountService.user.subscribe(p => {
-        if (p) {
-          this.user = p;
-        }
-      });
     }
   }
 

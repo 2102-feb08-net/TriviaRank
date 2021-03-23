@@ -10,25 +10,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AccountService {
-  private myUserSubject = new BehaviorSubject<User | null>(null);
+  public myUserSubject = new BehaviorSubject<User | null>(null);
   public user: Observable<User | null> = this.myUserSubject.asObservable();
   private baseUrl = environment.emailApiBaseUrl;
 
   constructor(private httpClient: HttpClient)
   {
-  }
-
-  login(username: string): void {
-    this.getByUsername(username)
-      .pipe(
-        retry(1),
-        catchError(this.handleError)
-      )
-      .subscribe(u => {
-        if (u.hasOwnProperty('username')) {
-          this.myUserSubject.next(u);
-        }
-      });
   }
 
   getAllPlayers(): Observable<User[]>
