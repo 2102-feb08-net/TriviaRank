@@ -11,10 +11,10 @@ import { OktaAuthService } from '@okta/okta-angular';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @Input() user?: User;
+  user?: User;
 
   constructor(private accountService: AccountService, private oktaAuth: OktaAuthService) {
-    accountService.user?.subscribe(p => {
+    accountService.user.subscribe(p => {
       if (p) {
         this.user = p;
       }

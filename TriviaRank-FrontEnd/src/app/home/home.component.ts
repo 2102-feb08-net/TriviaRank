@@ -16,31 +16,22 @@ export class HomeComponent implements OnInit {
   isAuthenticated = false;
   oktaUser: UserClaims | null = null;
   okta = environment.okta;
-  public user?: User;
+  user?: User;
 
   constructor(private accountService: AccountService, private oktaAuth: OktaAuthService){
     this.oktaAuth.$authenticationState
       .subscribe(isAuthenticated => {
         this.isAuthenticated = isAuthenticated;
       });
-   }
+
+    accountService.user.subscribe(p => {
+      if (p) {
+        this.user = p;
+      }
+    });
+  }
 
   async ngOnInit(): Promise<void> {
-    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
-    if (this.isAuthenticated) {
-      this.oktaUser = await this.oktaAuth.getUser();
-      if (this.oktaUser.email) {
-        this.accountService.getByUsername(this.oktaUser.email)
-          .pipe(catchError(err => {
-            this.logout();
-            return of(err);
-          }))
-          .subscribe(p => {
-            this.accountService.myUserSubject.next(p);
-            this.user = p;
-          });
-      }
-    }
   }
 
   formattedDate(date: Date): string

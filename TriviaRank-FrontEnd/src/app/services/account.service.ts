@@ -5,6 +5,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { Game } from '../models/Game';
 import { User } from '../models/User';
 import { environment } from 'src/environments/environment';
+import { OktaAuthService } from '@okta/okta-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,24 @@ export class AccountService {
   public user: Observable<User | null> = this.myUserSubject.asObservable();
   private baseUrl = environment.emailApiBaseUrl;
 
-  constructor(private httpClient: HttpClient)
+  constructor(private httpClient: HttpClient, private oktaAuth: OktaAuthService)
   {
+    oktaAuth.$authenticationState.subscribe(async isAuthenticated => {
+      if (isAuthenticated) {
+        const oktaUser = await this.oktaAuth.getUser();
+        if (oktaUser.email) {
+          this.getByUsername(oktaUser.email)
+            .pipe(catchError(err => {
+              oktaAuth.signOut();
+              return of(err);
+            }))
+            .subscribe(p => {
+              this.myUserSubject.next(p);
+              this.user = this.myUserSubject.asObservable();
+            });
+        }
+      }
+    });
   }
 
   getAllPlayers(): Observable<User[]>
