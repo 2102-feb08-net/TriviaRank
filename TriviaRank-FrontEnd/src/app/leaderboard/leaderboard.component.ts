@@ -10,23 +10,42 @@ import { of } from 'rxjs';
   styleUrls: ['./leaderboard.component.css']
 })
 export class LeaderboardComponent implements OnInit {
+  public totalPlayers = 0;
+  public pageSize = 5;
+  public currentPage = 1;
   public players: User[] = [];
+
   constructor(private accountService: AccountService) { }
 
-  ngOnInit(): void {
-    this.accountService.getAllPlayers()
-      .pipe(
-        catchError(err => {
-          return of(err);
-        })
-      )
-      .subscribe(players =>
-        {
+  getNumPlayers(): void {
+    this.accountService.getTotalPlayers()
+      .pipe( catchError(err => of(err)))
+        .subscribe(num => {
+          if (!isNaN(num)) {
+            this.totalPlayers = num;
+          }
+          console.log(this.totalPlayers);
+        });
+  }
+
+  getCurrentPlayers(): void {
+    this.accountService.getNPlayers(this.pageSize, this.currentPage)
+      .pipe( catchError(err => of(err)))
+        .subscribe(players => {
           if (Array.isArray(players)) {
-            players.sort((p1, p2) => p2.points - p1.points);
             this.players = players;
           }
         });
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.getCurrentPlayers();
+  }
+
+  ngOnInit(): void {
+    this.getNumPlayers();
+    this.getCurrentPlayers();
   }
 
 }

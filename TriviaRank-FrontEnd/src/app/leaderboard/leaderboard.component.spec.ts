@@ -8,9 +8,11 @@ describe('LeaderboardComponent', () => {
   let component: LeaderboardComponent;
   let fixture: ComponentFixture<LeaderboardComponent>;
 
-  const accountServiceSpy =  jasmine.createSpyObj('AccountService', ['getAllPlayers']);
+  const accountServiceSpy =
+    jasmine.createSpyObj('AccountService', ['getTotalPlayers', 'getNPlayers']);
   accountServiceSpy.user = new Observable<undefined>();
-  accountServiceSpy.getAllPlayers.and.returnValue(of([]));
+  accountServiceSpy.getTotalPlayers.and.returnValue(of(1));
+  accountServiceSpy.getNPlayers.and.returnValue(of([]));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

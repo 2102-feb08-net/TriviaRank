@@ -44,6 +44,24 @@ export class AccountService {
       );
   }
 
+  getTotalPlayers(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/api/players/amount`)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  getNPlayers(numPlayers: number, currentPage: number): Observable<User[]>
+  {
+    return this.httpClient.get<User[]>
+      (`${this.baseUrl}/api/players/amount/${numPlayers}/index/${currentPage - 1}`)
+        .pipe(
+          retry(1),
+          catchError(this.handleError)
+        );
+  }
+
   getByUsername(username: string): Observable<User>
   {
     return this.httpClient.get<User>(`${this.baseUrl}/api/player/username/${username}`)
