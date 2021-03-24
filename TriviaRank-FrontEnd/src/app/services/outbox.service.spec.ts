@@ -23,7 +23,6 @@ describe('OutboxService', () => {
      {
       id : 1,
       username : 'user1',
-      password : 'password',
       firstName : 'Bob',
       lastName : 'Smith',
       points : 0,

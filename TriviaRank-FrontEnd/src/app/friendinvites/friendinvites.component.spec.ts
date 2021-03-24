@@ -47,7 +47,6 @@ describe('handleDeleteFriendInvite', () => {
     const User = {
       id: 1,
     username: 'user1',
-    password: 'password',
     firstName: 'string',
     lastName: 'string',
     points: 1,

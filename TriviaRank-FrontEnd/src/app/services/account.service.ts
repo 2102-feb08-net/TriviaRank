@@ -23,7 +23,6 @@ export class AccountService {
         const toAddPlayer: User = {
           id: 1,
           username: oktaUser.email ? oktaUser.email : 'random@gmail.com',
-          password: 'notused',
           firstName: oktaUser.given_name ? this.createName(oktaUser.given_name) : 'First',
           lastName: oktaUser.family_name ? this.createName(oktaUser.family_name) : 'Last',
           points: 0,
