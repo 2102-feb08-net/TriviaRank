@@ -39,33 +39,26 @@ describe('FriendinvitesComponent', () => {
 
 describe('handleDeleteFriendInvite', () => {
   // test fxn console output
-  beforeEach(function(){
-    spyOn(window.console,'log');
+  beforeEach(() => {
+    spyOn(window.console, 'log');
   });
-  it("should test for handleDeleteFriendInvite's console output", () =>{
-    
-    let User = {
+  it('should test for handleDeleteFriendInvite\'s console output', () => {
+
+    const User = {
       id: 1,
-    username: "user1",
-    password: "password",
-    firstName: "string",
-    lastName: "string",
+    username: 'user1',
+    password: 'password',
+    firstName: 'string',
+    lastName: 'string',
     points: 1,
     birthday: new Date()
       };
-    FriendinvitesComponent.prototype.handleDeleteFriendInvite(User);
+    void FriendinvitesComponent.prototype.handleDeleteFriendInvite(User);
     expect(window.console.log).toHaveBeenCalled();
   });
 
-  // test fxn 
-  
+  // test fxn
+
   // test error catching
 
 });
-
-// describe('onFriendInviteClick', () => {
-//   // test if button is disabled
-//   it('button should be disabled', () => {
-
-//   });
-// });

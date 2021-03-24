@@ -4,8 +4,8 @@ import { TestBed } from '@angular/core/testing';
 import { MessageService } from './message.service';
 
 describe('MessageService', () => {
-  let httpClientSpy : {get: jasmine.Spy};
-  let messageService : MessageService;
+  let httpClientSpy: {get: jasmine.Spy};
+  let messageService: MessageService;
 
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);

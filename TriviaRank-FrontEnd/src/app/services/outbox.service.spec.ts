@@ -7,8 +7,8 @@ import { OutboxService } from './outbox.service';
 
 
 describe('OutboxService', () => {
-  let httpClientSpy : {get: jasmine.Spy};
-  let outboxService : OutboxService;
+  let httpClientSpy: {get: jasmine.Spy};
+  let outboxService: OutboxService;
 
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
@@ -16,19 +16,19 @@ describe('OutboxService', () => {
   });
 
   it('should return array or Users', () => {
-    let testUsers : User[];
+    let testUsers: User[];
     testUsers = [];
-    let playerId : number = 1;
-    let oneUser =
+    const playerId = 1;
+    const oneUser =
      {
       id : 1,
-      username : "user1",
-      password : "password",
-      firstName : "Bob",
-      lastName : "Smith",
+      username : 'user1',
+      password : 'password',
+      firstName : 'Bob',
+      lastName : 'Smith',
       points : 0,
       birthday : new Date()
-    }
+    };
 
     testUsers.push(oneUser);
 
