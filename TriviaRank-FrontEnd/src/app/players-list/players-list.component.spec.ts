@@ -23,3 +23,10 @@ describe('PlayersListComponent', () => {
   //   expect(component).toBeTruthy();
   // });
 });
+
+// onSubmit test??
+
+
+// getMessages test??
+
+// open test ??
