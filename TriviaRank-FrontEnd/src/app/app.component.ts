@@ -5,6 +5,8 @@ import { User } from './models/User';
 import { RouterModule } from '@angular/router';
 import { OktaAuthService } from '@okta/okta-angular';
 
+// a small change
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

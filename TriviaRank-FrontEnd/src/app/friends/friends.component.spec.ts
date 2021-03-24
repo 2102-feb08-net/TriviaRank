@@ -32,3 +32,6 @@ describe('FriendsComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+// test for convertFriendIdsToUser
+

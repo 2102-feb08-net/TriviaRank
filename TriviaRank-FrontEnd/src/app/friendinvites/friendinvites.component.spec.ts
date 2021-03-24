@@ -36,3 +36,29 @@ describe('FriendinvitesComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+describe('handleDeleteFriendInvite', () => {
+  // test fxn console output
+  beforeEach(() => {
+    spyOn(window.console, 'log');
+  });
+  it('should test for handleDeleteFriendInvite\'s console output', () => {
+
+    const User = {
+      id: 1,
+    username: 'user1',
+    password: 'password',
+    firstName: 'string',
+    lastName: 'string',
+    points: 1,
+    birthday: new Date()
+      };
+    void FriendinvitesComponent.prototype.handleDeleteFriendInvite(User);
+    expect(window.console.log).toHaveBeenCalled();
+  });
+
+  // test fxn
+
+  // test error catching
+
+});

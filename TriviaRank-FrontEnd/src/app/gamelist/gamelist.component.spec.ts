@@ -23,3 +23,13 @@ describe('GamelistComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+describe('formatedDate', () => {
+  it('should return a date as a string', () => {
+
+    let testDate: Date;
+    testDate = new Date();
+    const result = GamelistComponent.prototype.formattedDate(testDate);
+    expect(result).toBe(testDate.toLocaleString());
+  });
+});
