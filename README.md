@@ -8,14 +8,9 @@ A trivia game using the [Open Trivia Database Api](https://opentdb.com/). Partic
 
 ## Technology:
 Front End
-*Angular 
-*Typescript
-
-Back End
-* C#
-* .NET
-* Entity Framework
-* Azure SQL Server
+* Angular 
+* Typescript
+* Azure Services
 
 Testing
 * Jasmine - front end
@@ -26,4 +21,4 @@ Testing
 For now contributing will only be done with project members, but thank you for your interest
 
 ## Project Status 
-Approved
+Maintenance
